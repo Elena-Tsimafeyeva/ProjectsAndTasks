@@ -1,12 +1,33 @@
-﻿<Window x:Class="ProjectsAndTasks.View.MainWindow"
+﻿<mah:MetroWindow x:Class="ProjectsAndTasks.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectsAndTasks.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title=" Projects and Tasks" TitleForeground="Gray" Height="450" Width="800"
+        TitleTemplate="{StaticResource ResourceKey=CustomWindowTitleTemplate}"
+        TitleCharacterCasing="Normal"
+        WindowTitleBrush="LightGray">
     <Grid>
+        <TabControl>
+            <TabItem Header="Main page">
+                <Grid Background="LightGray">
+                    <!--<local:TopMenu VerticalAlignment="Top"/>-->
+                </Grid>
+            </TabItem>
+            <TabItem Header="My projects">
+                <Grid Background="LightGray">
+                    <!--<local:TopMenu VerticalAlignment="Top"/>-->
+                </Grid>
+            </TabItem>
+            <TabItem Header="Users">
+                <Grid Background="LightGray">
+                    <!--<local:TopMenu VerticalAlignment="Top"/>-->
+                </Grid>
+            </TabItem>
+        </TabControl>
         
     </Grid>
-</Window>
+</mah:MetroWindow>

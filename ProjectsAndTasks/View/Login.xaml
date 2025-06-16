@@ -6,7 +6,20 @@
         xmlns:local="clr-namespace:ProjectsAndTasks.View"
         mc:Ignorable="d"
         Title="Login" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Background="LightGray">
+        <Viewbox x:Name="Viewbox"  Stretch="Uniform" Margin="140">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Image x:Name="ImageIcon" Height="40" Width="40" Margin="5" Source="D:\Лена\Стажировка\Изучение C# 12 и .NET 8\4\ProjectsAndTasks\ProjectsAndTasks\Images\Profile.png" Stretch="UniformToFill"/>
+                <StackPanel Orientation="Horizontal" Margin="5" Background="#80FFFFFF">
+                    <TextBlock x:Name="TextBlockLogin" Height="20" Width="55" Text="Login:"/>
+                    <TextBox x:Name="TextBoxLogin" Height="20" Width="200"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5" Background="#80FFFFFF">
+                    <TextBlock x:Name="TextBlockPassword" Height="20" Width="55" Text="Password:"/>
+                    <TextBox x:Name="TextBoxPassword" Height="20" Width="200"/>
+                </StackPanel>
+                <Button x:Name="btnLogIn" Content=" Log in "/>
+            </StackPanel>
+        </Viewbox>
     </Grid>
 </Window>
