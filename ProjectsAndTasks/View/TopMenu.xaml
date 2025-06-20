@@ -3,14 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ProjectsAndTasks.View"
+             xmlns:local="clr-namespace:ProjectsAndTasks.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <local:TopMenuVM/>
+    </UserControl.DataContext>
     <Grid>
         <DockPanel Background="#80FFFFFF">
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right">
-                <Button Content="Profil" Height="20" Width="45" Margin="0,2,2,2"/>
-                <Button Content="Exit" Height="20" Width="45" Margin="0,2,2,2"/>
+                <Button Content="Profil" Height="20" Width="45" Margin="0,2,2,2" Command="{Binding ProfileCommand}"/>
+                <Button Content="Exit" Height="20" Width="45" Margin="0,2,2,2" Command="{Binding ExitProfileCommand}"/>
             </StackPanel>
         </DockPanel>
     </Grid>

@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using ProjectsAndTasks.ViewModel;
 namespace ProjectsAndTasks.View
 {
     /// <summary>
@@ -9,6 +10,7 @@ namespace ProjectsAndTasks.View
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new ProjectsVM();
         }
     }
 }

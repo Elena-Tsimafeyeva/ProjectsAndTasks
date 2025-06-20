@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ProjectsAndTasks.ViewModel;
 
 namespace ProjectsAndTasks.View
 {
@@ -23,6 +24,7 @@ namespace ProjectsAndTasks.View
         public TopMenu()
         {
             InitializeComponent();
+            DataContext = new TopMenuVM();
         }
     }
 }
