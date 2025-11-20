@@ -36,6 +36,8 @@
                                             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                                                 <TextBlock Text="{Binding Title}" Margin="5"/>
                                                 <Button Content="Add Task" Command="{Binding CreateTaskCommand}" Margin="5"/>
+                                                <Button Content="Save Project"/>
+                                                <Button Content="Delete Project"/>
                                             </StackPanel>
                                             <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left"/>
                                             <ProgressBar Value="{Binding Progress}" Minimum="0" Maximum="100" Margin="5"/>
@@ -59,6 +61,8 @@
                                                                     <ComboBoxItem Content="90%" />
                                                                     <ComboBoxItem Content="100%" />
                                                                 </ComboBox>
+                                                                <Button Content="Save task"/>
+                                                                <Button Content="Delete task"/>
                                                             </StackPanel>
                                                             <TextBox Text="{Binding Description}" TextWrapping="Wrap" AcceptsReturn="True" VerticalAlignment="Top" MinHeight="30" MaxHeight="200" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left"/>
                                                             <ProgressBar Value="{Binding Progress}" Minimum="0" Maximum="100" />
@@ -77,6 +81,7 @@
             <TabItem Header="Users">
                 <Grid Background="LightGray">
                     <view:TopMenu VerticalAlignment="Top"/>
+                    
                     <TextBlock Text="This part is in development..." HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
             </TabItem>
