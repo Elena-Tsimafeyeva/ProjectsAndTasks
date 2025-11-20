@@ -14,28 +14,23 @@ namespace ProjectsAndTasks.ViewModel
 {
     internal class ProjectsVM : INotifyPropertyChanged
     {
-
-        public ObservableCollection<ProjectItemVM> Projects { get; set; }
-
+        public ObservableCollection<ProjectItem> Projects { get; set; }
         public ICommand CreateProjectCommand { get; }
-
         public ProjectsVM()
         {
-            Projects = new ObservableCollection<ProjectItemVM>();
+            Projects = new ObservableCollection<ProjectItem>();
             CreateProjectCommand = new RelayCommand(CreateProject);
         }
-
         private void CreateProject()
         {
-            var project = new ProjectItem
+            Projects.Add(new ProjectItem
             {
                 Title = $"Проект {Projects.Count + 1}",
                 Description = "Описание проекта...",
                 Progress = 0
-            };
-            Projects.Add(new ProjectItemVM(project));
+            });
+            OnPropertyChanged(nameof(Projects));
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)

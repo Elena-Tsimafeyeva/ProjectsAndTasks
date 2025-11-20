@@ -12,17 +12,13 @@ namespace ProjectsAndTasks.ViewModel
 {
     internal class ProjectItemVM : INotifyPropertyChanged
     {
-        public ProjectItem Project { get; }
         public ObservableCollection<TaskItem> Tasks { get; }
         public ICommand CreateTaskCommand { get; }
-
-        public ProjectItemVM(ProjectItem project)
+        public ProjectItemVM()
         {
-            Project = project;
             Tasks = new ObservableCollection<TaskItem>();
             CreateTaskCommand = new RelayCommand(CreateTask);
         }
-
         private void CreateTask()
         {
             Tasks.Add(new TaskItem
@@ -33,27 +29,7 @@ namespace ProjectsAndTasks.ViewModel
             });
             OnPropertyChanged(nameof(Tasks));
         }
-
-        public string Title => Project.Title;
-        public string Description
-        {
-            get => Project.Description;
-            set
-            {
-                Project.Description = value;
-                OnPropertyChanged(nameof(Description));
-            }
-        }
-        public int Progress
-        {
-            get => Project.Progress;
-            set
-            {
-                Project.Progress = value;
-                OnPropertyChanged(nameof(Progress));
-            }
-        }
-
+        
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
