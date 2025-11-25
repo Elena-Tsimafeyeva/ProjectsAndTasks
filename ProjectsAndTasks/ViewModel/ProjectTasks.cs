@@ -80,8 +80,8 @@ namespace ProjectsAndTasks.ViewModel
         }
         private void SaveTaskChenges(ProjectTasksItemVM task)
         {
-            var saveProject = new SaveProject();
-            saveProject.UpdateProjectAsync(task.Title, task.Description, task.Progress);
+            var saveTask = new SaveTask();
+            saveTask.UpdateTaskAsync(task.Title, task.Description, task.Progress);
         }
         private void RemoveTask(ProjectTasksItemVM task)
         {
