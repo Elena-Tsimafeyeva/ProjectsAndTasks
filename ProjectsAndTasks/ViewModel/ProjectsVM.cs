@@ -84,6 +84,8 @@ namespace ProjectsAndTasks.ViewModel
         private void OpenTasks(ProjectItemVM project)
         {
             MessageBox.Show($"Открываю задачи проекта: {project.Title}");
+            var saveProjectId = new SaveProjectId();
+            saveProjectId.SaveMyProjectId(project.Title);
             var tasksVm = new ProjectTasks();  
             var window = new View.ProjectV(tasksVm);
             window.ShowDialog();

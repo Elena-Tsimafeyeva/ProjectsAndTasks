@@ -24,7 +24,7 @@ namespace ProjectsAndTasks.MongoDb.Model
         public string TaskName { get; set; }
 
         [BsonElement("task_percent")]
-        public int Percent { get; set; }
+        public int TaskPercent { get; set; }
 
         [BsonElement("task_description")]
         public string TaskDescription { get; set; }

@@ -35,8 +35,8 @@
                                         <ComboBoxItem Content="90%" />
                                         <ComboBoxItem Content="100%" />
                                     </ComboBox>
-                                    <Button Content="Save task"/>
-                                    <Button Content="Delete task"/>
+                                    <Button Content="Save task" Command="{Binding SaveTaskChangesCommand}"/>
+                                    <Button Content="Delete task" Command="{Binding RemoveTaskCommand}"/>
                                 </StackPanel>
                                 <TextBox Text="{Binding Description}" TextWrapping="Wrap" AcceptsReturn="True" VerticalAlignment="Top" MinHeight="30" MaxHeight="200" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left"/>
                                 <ProgressBar Value="{Binding Progress}" Minimum="0" Maximum="100" />

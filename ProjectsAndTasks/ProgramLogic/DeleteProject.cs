@@ -17,22 +17,22 @@ namespace ProjectsAndTasks.ProgramLogic
         private readonly MongoDbContext _context = new MongoDbContext();
         public async Task RemoveMyProject(string title)
         {
-            string text = SaveProject.ReadUserId();
-            ObjectId personId = ObjectId.Parse(text);
+            string text = SaveTask.ReadProjectId();
+            ObjectId projectId = ObjectId.Parse(text);
 
-            var filter = Builders<Project>.Filter.And(
-            Builders<Project>.Filter.Eq(p => p.PersonId, personId),
-            Builders<Project>.Filter.Eq(p => p.ProjectName, title));
+            var filter = Builders<ProjectTask>.Filter.And(
+            Builders<ProjectTask>.Filter.Eq(p => p.ProjectId, projectId),
+            Builders<ProjectTask>.Filter.Eq(p => p.TaskName, title));
 
-            var result = await _context.Projects.DeleteOneAsync(filter);
+            var result = await _context.Tasks.DeleteOneAsync(filter);
 
             if (result.DeletedCount > 0)
             {
-                MessageBox.Show("Проект успешно удалён");
+                MessageBox.Show("Задача успешно удалена");
             }
             else
             {
-                MessageBox.Show("Проект не найден");
+                MessageBox.Show("Задача не найдена");
             }
         }
     }
