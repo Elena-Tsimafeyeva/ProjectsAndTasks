@@ -81,26 +81,34 @@ namespace ProjectsAndTasks.ViewModel
             saveProject.SaveMyProject(project.Title, project.Description, project.Progress);
             }
         }
-        private void OpenTasks(ProjectItemVM project)
+        private async void OpenTasks(ProjectItemVM project)
         {
             MessageBox.Show($"Открываю задачи проекта: {project.Title}");
             var saveProjectId = new SaveProjectId();
-            saveProjectId.SaveMyProjectId(project.Title);
+            await saveProjectId.SaveMyProjectId(project.Title);
             var tasksVm = new ProjectTasks();  
-            var window = new View.ProjectV(tasksVm);
-            window.ShowDialog();
+            var window = new ProjectV(tasksVm);
+            window.Show();
+            CloseSpecificWindow();
         }
-        private void SaveProjectChanges(ProjectItemVM project)
+        private async void SaveProjectChanges(ProjectItemVM project)
         {
             MessageBox.Show($"Save changes {project.Title}");
             var saveProject = new SaveProject();
-            saveProject.UpdateProjectAsync(project.Title, project.Description, project.Progress);
+            await saveProject.UpdateProjectAsync(project.Title, project.Description, project.Progress);
         }
         private async void RemoveProject(ProjectItemVM project)
         {
             Projects.Remove(project);
             var deleteProject = new DeleteProject();
-            await deleteProject.RemoveMyProject($"{project.Title}");
+            await deleteProject.RemoveMyProject(project.Title);
+        }
+        public static void CloseSpecificWindow()
+        {
+            var windowToClose = Application.Current.Windows
+                .OfType<Window>()
+                .FirstOrDefault(w => w.Title == " Projects and Tasks");
+            windowToClose?.Close();
         }
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)

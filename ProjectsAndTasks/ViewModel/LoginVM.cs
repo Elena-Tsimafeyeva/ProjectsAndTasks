@@ -68,7 +68,7 @@ namespace ProjectsAndTasks.ViewModel
         /// E.A.T. 14-November-2025
         /// User registration.
         /// </summary>
-        private void Register()
+        private async void Register()
         {
             if (_loginCheck.IsLoginExists(Login))
             {
@@ -77,7 +77,7 @@ namespace ProjectsAndTasks.ViewModel
             else
             {
                 SaveUser saveUser = new SaveUser();
-                saveUser.RegisterUser(this.Login, this.Password);
+                await saveUser.RegisterUser(this.Login, this.Password);
 
                 MessageBox.Show("Пользователь успешно зарегистрирован!");
                 MessageBox.Show("Register");

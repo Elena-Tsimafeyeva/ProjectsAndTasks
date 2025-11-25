@@ -27,10 +27,10 @@ namespace ProjectsAndTasks.ViewModel
         public InputTitleVM() {
             SaveTitleCommand = new RelayCommand(SaveTheEnteredTitle);
         }
-        private void SaveTheEnteredTitle()
+        private async void SaveTheEnteredTitle()
         {
             var saveTitle = new SaveTitle();
-            saveTitle.SaveMyTitleAsync(Title);
+            await saveTitle.SaveMyTitleAsync(Title);
             CloseSpecificWindow();
         }
         public static void CloseSpecificWindow()

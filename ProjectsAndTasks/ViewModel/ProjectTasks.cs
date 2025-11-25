@@ -23,10 +23,12 @@ namespace ProjectsAndTasks.ViewModel
         private readonly MongoDbContext _context = new MongoDbContext();
         public ObservableCollection<ProjectTasksItemVM> NewTasks { get; set; }
         public ICommand CreateNewTaskCommand { get; }
+        public ICommand ReturnToMainPageCommand { get; }
         public ProjectTasks()
         {
             NewTasks = new ObservableCollection<ProjectTasksItemVM>();
             CreateNewTaskCommand = new RelayCommand(CreateTask);
+            ReturnToMainPageCommand = new RelayCommand(ReturnMainWindow);
             LoadTasksFromDb();
         }
         private void LoadTasksFromDb()
@@ -41,7 +43,7 @@ namespace ProjectsAndTasks.ViewModel
 
                 foreach (var task in tasksFromDb)
                 {
-                    NewTasks.Add(new ProjectTasksItemVM(SaveTaskChenges, RemoveTask)
+                    NewTasks.Add(new ProjectTasksItemVM(SaveTaskChanges, RemoveTask)
                     {
                         Title = task.TaskName,
                         Description = task.TaskDescription,
@@ -54,7 +56,7 @@ namespace ProjectsAndTasks.ViewModel
                 MessageBox.Show($"Ошибка загрузки задач: {ex.Message}");
             }
         }
-        private void CreateTask()
+        private async void CreateTask()
         {
             var window = new InputTitle();
             window.ShowDialog();
@@ -67,7 +69,7 @@ namespace ProjectsAndTasks.ViewModel
                     MessageBox.Show("Такое имя задачи уже есть или пустое значение");
                     return;
                 }
-                var task = new ProjectTasksItemVM(SaveTaskChenges, RemoveTask)
+                var task = new ProjectTasksItemVM(SaveTaskChanges, RemoveTask)
                 {
                     Title = $"{title}",
                     Description = "Описание проекта...",
@@ -76,16 +78,49 @@ namespace ProjectsAndTasks.ViewModel
                 NewTasks.Add(task);
                 var saveTask = new SaveTask();
                 saveTask.SaveMyTask(task.Title, task.Description, task.Progress);
+
+                var projectPercent = new ProjectPercent();
+                double projPercent = projectPercent.CalculationOfProjectPercentages();
+                int percent = (int)projPercent;
+                MessageBox.Show($"Процент проекта: {percent}");
+                await projectPercent.UpdateProjectPercentAsync(percent);
             }
         }
-        private void SaveTaskChenges(ProjectTasksItemVM task)
+        private async void SaveTaskChanges(ProjectTasksItemVM task)
         {
             var saveTask = new SaveTask();
-            saveTask.UpdateTaskAsync(task.Title, task.Description, task.Progress);
-        }
-        private void RemoveTask(ProjectTasksItemVM task)
-        {
+            await saveTask.UpdateTaskAsync(task.Title, task.Description, task.Progress);
 
+            var projectPercent = new ProjectPercent();
+            double projPercent = projectPercent.CalculationOfProjectPercentages();
+            int percent = (int)projPercent;
+            MessageBox.Show($"Процент проекта: {percent}");
+            await projectPercent.UpdateProjectPercentAsync(percent);
+        }
+        private async void RemoveTask(ProjectTasksItemVM task)
+        {
+            NewTasks.Remove(task);
+            var deleteTask = new DeleteTask();
+            await deleteTask.RemoveMyTask(task.Title);
+
+            var projectPercent = new ProjectPercent();
+            double projPercent = projectPercent.CalculationOfProjectPercentages();
+            int percent = (int)projPercent;
+            MessageBox.Show($"Процент проекта: {percent}");
+            await projectPercent.UpdateProjectPercentAsync(percent);
+        }
+        private void ReturnMainWindow()
+        {
+            var window = new MainWindow();
+            window.Show();
+            CloseSpecificWindow();
+        }
+        public static void CloseSpecificWindow()
+        {
+            var windowToClose = Application.Current.Windows
+                .OfType<Window>()
+                .FirstOrDefault(w => w.Title == "Tasks");
+            windowToClose?.Close();
         }
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name) =>

@@ -15,7 +15,10 @@
         <view:TopMenu VerticalAlignment="Top"/>
         <ScrollViewer Margin="0,24,0,0">
             <StackPanel Background="LightGray">
-                <Button Content="Create new task" Command="{Binding CreateNewTaskCommand}" HorizontalAlignment="Left" Margin="5"/>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <Button Content="Create new task" Command="{Binding CreateNewTaskCommand}" HorizontalAlignment="Left" Margin="5"/>
+                    <Button Content="Return to Main Page" Command="{Binding ReturnToMainPageCommand}"/>
+                </StackPanel>
                 <ItemsControl ItemsSource="{Binding NewTasks}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>

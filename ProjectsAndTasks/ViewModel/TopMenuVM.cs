@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ProjectsAndTasks.View;
 
@@ -27,10 +28,15 @@ namespace ProjectsAndTasks.ViewModel
     
         private void ExitProfile()
         {
-            //var loginVM = new LoginVM();
-            var window = new Login();
-            window.ShowDialog();
+            var loginWindow = new Login();
+            foreach (var window in Application.Current.Windows.OfType<Window>().ToList())
+            {
+                if (window != loginWindow)
+                    window.Close();
+            }
+            loginWindow.ShowDialog();
         }
+       
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
         {
