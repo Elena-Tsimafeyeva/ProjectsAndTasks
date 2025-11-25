@@ -1,19 +1,17 @@
 ﻿using MahApps.Metro.Controls;
 using ProjectsAndTasks.ViewModel;
-using ProjectsAndTasks;
 
 namespace ProjectsAndTasks.View
 {
     /// <summary>
-    /// Interaction logic for Login.xaml
+    /// Interaction logic for Project.xaml
     /// </summary>
-    public partial class Login : MetroWindow
+    public partial class ProjectV : MetroWindow
     {
-        public Login()
+        public ProjectV(ProjectTasks tasksVM)
         {
             InitializeComponent();
-            DataContext = new LoginVM();
+            DataContext = tasksVM;
         }
-       
     }
 }

@@ -34,9 +34,9 @@
                                         <StackPanel Orientation="Vertical" Background="AliceBlue" Margin="5">
                                             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                                                 <TextBlock Text="{Binding Title}" Margin="5"/>
-                                                <Button Content="Add Task" Command="{Binding CreateTaskCommand}" Margin="5"/>
-                                                <Button Content="Save Project"/>
-                                                <Button Content="Delete Project"/>
+                                                <Button Content="Tasks" Command="{Binding OpenTasksCommand}" Margin="5"/>
+                                                <Button Content="Save Changes" Command="{Binding SaveProjectChangesCommand}"/>
+                                                <Button Content="Delete Project" Command="{Binding RemoveProjectCommand}"/>
                                             </StackPanel>
                                             <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Width="200" HorizontalAlignment="Left"/>
                                             <ProgressBar Value="{Binding Progress}" Minimum="0" Maximum="100" Margin="5"/>

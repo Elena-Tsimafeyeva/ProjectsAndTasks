@@ -1,10 +1,9 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MahApps.Metro.Controls;
-using ProjectsAndTasks.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -17,11 +16,11 @@ using System.Windows.Shapes;
 namespace ProjectsAndTasks.View
 {
     /// <summary>
-    /// Interaction logic for Project.xaml
+    /// Interaction logic for InputTitle.xaml
     /// </summary>
-    public partial class Project : MetroWindow
+    public partial class InputTitle : MetroWindow
     {
-        public Project()
+        public InputTitle()
         {
             InitializeComponent();
         }

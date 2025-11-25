@@ -27,8 +27,9 @@ namespace ProjectsAndTasks.ViewModel
     
         private void ExitProfile()
         {
-        var window = new Login();
-        window.ShowDialog();
+            //var loginVM = new LoginVM();
+            var window = new Login();
+            window.ShowDialog();
         }
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)

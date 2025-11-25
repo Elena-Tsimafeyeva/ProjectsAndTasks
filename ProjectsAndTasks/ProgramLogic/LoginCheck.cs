@@ -6,17 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ProjectsAndTasks.ProgramLogic
 {
     public class LoginCheck
     {
-        private readonly MongoDbContext _context;
-
-        public LoginCheck()
-        {
-            _context = new MongoDbContext();
-        }
+        private readonly MongoDbContext _context = new MongoDbContext();
 
         /// <summary>
         ///  E.A.T. 05-November-2025
@@ -29,6 +25,18 @@ namespace ProjectsAndTasks.ProgramLogic
 
             var filter = Builders<Person>.Filter.Eq(p => p.Login, login);
             return _context.Persons.Find(filter).Any();
+        }
+        /// <summary>
+        ///  E.A.T. 24-November-2025
+        /// Checks if a password is correct.
+        /// </summary>
+        public bool ValidatePassword(string login, string password)
+        {
+            if (string.IsNullOrWhiteSpace(password))
+                return false;
+            var filter = Builders<Person>.Filter.Eq(p => p.Login, login);
+            var user = _context.Persons.Find(filter).FirstOrDefault();
+            return user.Password == password;
         }
     }
 }

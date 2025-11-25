@@ -13,7 +13,7 @@
     <Grid Background="Gray">
         <Border HorizontalAlignment="Center" VerticalAlignment="Center" Padding="30" Background="LightGray" CornerRadius="10">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Image Height="40" Width="40" Margin="5" Source="D:\Лена\Стажировка\Изучение C# 12 и .NET 8\4\ProjectsAndTasks\ProjectsAndTasks\Images\Profile.png" Stretch="UniformToFill"/>
+                <Image Height="40" Width="40" Margin="5" Source="pack://application:,,,/Images\Profile.png" Stretch="UniformToFill"/>
                 <StackPanel Orientation="Horizontal" Margin="5" Background="#80FFFFFF">
                     <TextBlock Height="20" Width="55" Text="Login:"/>
                     <TextBox Height="20" Width="200" Text="{Binding Login}"/>

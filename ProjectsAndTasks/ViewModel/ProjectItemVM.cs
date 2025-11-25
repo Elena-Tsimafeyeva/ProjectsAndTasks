@@ -6,32 +6,64 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ProjectsAndTasks.ViewModel
 {
-    internal class ProjectItemVM : INotifyPropertyChanged
+    public class ProjectItemVM : INotifyPropertyChanged
     {
-        public ObservableCollection<TaskItem> Tasks { get; }
-        public ICommand CreateTaskCommand { get; }
-        public ProjectItemVM()
+        private string title;
+        private string description;
+        private int progress;
+        private readonly Action<ProjectItemVM> openTasksAction;
+        private readonly Action<ProjectItemVM> saveProjectСhangesAction;
+        private readonly Action<ProjectItemVM> removeProjectAction;
+        public string Title
         {
-            Tasks = new ObservableCollection<TaskItem>();
-            CreateTaskCommand = new RelayCommand(CreateTask);
+            get => title; 
+            set{
+                title = value;
+                OnPropertyChanged(nameof(Title));
+            }
         }
-        private void CreateTask()
+        public string Description
         {
-            Tasks.Add(new TaskItem
+            get => description;
+            set
             {
-                Title = $"Задача {Tasks.Count + 1}",
-                Description = "Описание задачи...",
-                Progress = 0
-            });
-            OnPropertyChanged(nameof(Tasks));
+                description = value;
+                OnPropertyChanged(nameof(Description));
+            }
         }
-        
+        public int Progress
+        {
+            get => progress;
+            set
+            {
+                progress = value;
+                OnPropertyChanged(nameof(Progress));
+            }
+        }
+        public ICommand OpenTasksCommand { get; }
+        public ICommand SaveProjectChangesCommand { get; }
+        public ICommand RemoveProjectCommand { get; }
+        public ProjectItemVM(Action<ProjectItemVM> openTasks, Action<ProjectItemVM> saveProjectChanges, Action<ProjectItemVM> removeProject)
+        {
+            openTasksAction = openTasks;
+            OpenTasksCommand = new RelayCommand(() => openTasksAction(this));
+
+            saveProjectСhangesAction = saveProjectChanges;
+            SaveProjectChangesCommand = new RelayCommand(() => saveProjectСhangesAction(this));
+
+            removeProjectAction = removeProject;
+            RemoveProjectCommand = new RelayCommand(() => removeProjectAction(this));
+
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }
+

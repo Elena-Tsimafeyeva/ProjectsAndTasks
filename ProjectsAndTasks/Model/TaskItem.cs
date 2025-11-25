@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjectsAndTasks.Model
 {
-    internal class TaskItem : INotifyPropertyChanged
+    public class TaskItem : INotifyPropertyChanged
     {
         private string title;
         private string description;

@@ -1,24 +1,17 @@
-﻿using Microsoft.Win32;
-using ProjectsAndTasks.MongoDb;
+﻿using ProjectsAndTasks.MongoDb;
 using ProjectsAndTasks.MongoDb.Model;
 using ProjectsAndTasks.ProgramLogic;
 using ProjectsAndTasks.View;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
 namespace ProjectsAndTasks.ViewModel
 {
-    internal class LoginVM : INotifyPropertyChanged
+    public class LoginVM : INotifyPropertyChanged
     {
-        private readonly MongoDbContext _context = new MongoDbContext();
         private readonly LoginCheck _loginCheck = new LoginCheck();
+       
 
         private string _login;
         public string Login
@@ -46,10 +39,30 @@ namespace ProjectsAndTasks.ViewModel
             LogInCommand = new RelayCommand(LogIn);
             RegisterCommand = new RelayCommand(Register);
         }
-        private void LogIn()
+        /// <summary>
+        /// E.A.T. 24-November-2025
+        /// User logIn.
+        /// </summary>
+        private async void LogIn()
         {
-            MessageBox.Show("LogIn");
-            OpenMainWindow();
+            if (_loginCheck.IsLoginExists(Login))
+            {
+                if (_loginCheck.ValidatePassword(this.Login, this.Password))
+                {
+                    MessageBox.Show($"LogIn. Welcome, {this.Login}");
+                    SaveUser saveUser = new SaveUser();
+                    await saveUser.SaveUserFileAsync(this.Login);
+                    OpenMainWindow();
+                }
+                else
+                {
+                    MessageBox.Show("Неверный пароль");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Такого пользователя нет. Зарегестрируйтесь или исправьте Login");
+            }
         }
         /// <summary>
         /// E.A.T. 14-November-2025
@@ -63,14 +76,8 @@ namespace ProjectsAndTasks.ViewModel
             }
             else
             {
-                var newPerson = new Person
-                {
-                    Login = this.Login,
-                    Password = this.Password
-                };
-
-                var context = new MongoDbContext();
-                context.Persons.InsertOne(newPerson);
+                SaveUser saveUser = new SaveUser();
+                saveUser.RegisterUser(this.Login, this.Password);
 
                 MessageBox.Show("Пользователь успешно зарегистрирован!");
                 MessageBox.Show("Register");
