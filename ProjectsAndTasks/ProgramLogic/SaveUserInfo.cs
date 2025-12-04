@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectsAndTasks.ProgramLogic
 {
-    internal class SaveUserInfo
+    public class SaveUserInfo
     {
     }
 }

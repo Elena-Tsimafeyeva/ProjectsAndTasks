@@ -1,27 +1,18 @@
 ﻿using ProjectsAndTasks.Model;
 using ProjectsAndTasks.MongoDb.Model;
 using ProjectsAndTasks.View;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using ProjectsAndTasks.ProgramLogic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Diagnostics;
-using Microsoft.EntityFrameworkCore;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using ProjectsAndTasks.MongoDb;
-using ProjectsAndTasks.MongoDb.Model;
 
 namespace ProjectsAndTasks.ViewModel
 {
-    public class ProjectsVM : INotifyPropertyChanged
+    public class ProjectsVM : ViewModelBase
     {
         private readonly MongoDbContext _context = new MongoDbContext();
         public ObservableCollection<ProjectItemVM> Projects { get; set; }
@@ -44,12 +35,13 @@ namespace ProjectsAndTasks.ViewModel
 
                 foreach (var proj in projectsFromDb)
                 {
-                    Projects.Add(new ProjectItemVM(OpenTasks, SaveProjectChanges, RemoveProject)
+                    var projectItem = new ProjectItem
                     {
                         Title = proj.ProjectName,
                         Description = proj.ProjectDescription,
                         Progress = proj.Percent
-                    });
+                    };
+                    Projects.Add(new ProjectItemVM(projectItem, OpenTasks, SaveProjectChanges, RemoveProject));
                 }
             }
             catch (Exception ex)
@@ -70,15 +62,16 @@ namespace ProjectsAndTasks.ViewModel
                     MessageBox.Show("Такое имя проекта уже есть или пустое значение");
                     return; 
                 }
-                var project = new ProjectItemVM(OpenTasks, SaveProjectChanges, RemoveProject)
+                var projectItem = new ProjectItem
                 {
-                    Title = $"{title}",
+                    Title = title,
                     Description = "Описание проекта...",
                     Progress = 0
                 };
-            Projects.Add(project);
-            var saveProject = new SaveProject();
-            saveProject.SaveMyProject(project.Title, project.Description, project.Progress);
+                var projectItemVM = new ProjectItemVM(projectItem, OpenTasks, SaveProjectChanges, RemoveProject);
+                Projects.Add(projectItemVM);
+                var saveProject = new SaveProject();
+                saveProject.SaveMyProject(projectItem.Title, projectItem.Description, projectItem.Progress);
             }
         }
         private async void OpenTasks(ProjectItemVM project)
@@ -110,10 +103,6 @@ namespace ProjectsAndTasks.ViewModel
                 .FirstOrDefault(w => w.Title == " Projects and Tasks");
             windowToClose?.Close();
         }
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        
     }
 }

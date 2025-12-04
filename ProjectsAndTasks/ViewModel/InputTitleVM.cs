@@ -1,17 +1,11 @@
 ﻿using ProjectsAndTasks.ProgramLogic;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
 namespace ProjectsAndTasks.ViewModel
 {
-    public class InputTitleVM : INotifyPropertyChanged
+    public class InputTitleVM : ViewModelBase
     {
         private string _title;
         public string Title
@@ -39,11 +33,6 @@ namespace ProjectsAndTasks.ViewModel
                 .OfType<Window>()
                 .FirstOrDefault(w => w.Title == "InputTitle");
             windowToClose?.Close();
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

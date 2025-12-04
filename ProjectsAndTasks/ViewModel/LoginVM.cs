@@ -1,6 +1,4 @@
-﻿using ProjectsAndTasks.MongoDb;
-using ProjectsAndTasks.MongoDb.Model;
-using ProjectsAndTasks.ProgramLogic;
+﻿using ProjectsAndTasks.ProgramLogic;
 using ProjectsAndTasks.View;
 using System.ComponentModel;
 using System.Windows;
@@ -8,7 +6,7 @@ using System.Windows.Input;
 
 namespace ProjectsAndTasks.ViewModel
 {
-    public class LoginVM : INotifyPropertyChanged
+    public class LoginVM : ViewModelBase
     {
         private readonly LoginCheck _loginCheck = new LoginCheck();
        
@@ -96,11 +94,6 @@ namespace ProjectsAndTasks.ViewModel
                 .OfType<Window>()
                 .FirstOrDefault(w => w.Title == "Login");
             windowToClose?.Close();
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

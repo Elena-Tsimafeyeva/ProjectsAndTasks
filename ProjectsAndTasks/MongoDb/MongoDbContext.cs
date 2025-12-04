@@ -25,5 +25,6 @@ namespace ProjectsAndTasks.MongoDb
         public IMongoCollection<Person> Persons => _database.GetCollection<Person>("Persons");
         public IMongoCollection<Project> Projects => _database.GetCollection<Project>("Projects");
         public IMongoCollection<ProjectTask> Tasks => _database.GetCollection<ProjectTask>("Tasks");
+        public IMongoCollection<ProfileInfoDB> ProfileInform => _database.GetCollection<ProfileInfoDB>("ProfileInform");
     }
 }

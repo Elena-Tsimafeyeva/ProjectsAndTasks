@@ -1,24 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using ProjectsAndTasks.Model;
 using ProjectsAndTasks.MongoDb;
 using ProjectsAndTasks.MongoDb.Model;
 using ProjectsAndTasks.ProgramLogic;
 using ProjectsAndTasks.View;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
 namespace ProjectsAndTasks.ViewModel
 {
-    public class ProjectTasks
+    public class ProjectTasks : ViewModelBase
     {
         private readonly MongoDbContext _context = new MongoDbContext();
         public ObservableCollection<ProjectTasksItemVM> NewTasks { get; set; }
@@ -43,12 +38,13 @@ namespace ProjectsAndTasks.ViewModel
 
                 foreach (var task in tasksFromDb)
                 {
-                    NewTasks.Add(new ProjectTasksItemVM(SaveTaskChanges, RemoveTask)
+                    var taskItem = new TaskItem
                     {
                         Title = task.TaskName,
                         Description = task.TaskDescription,
                         Progress = task.TaskPercent
-                    });
+                    };
+                    NewTasks.Add(new ProjectTasksItemVM(taskItem, SaveTaskChanges, RemoveTask));
                 }
             }
             catch (Exception ex)
@@ -69,15 +65,16 @@ namespace ProjectsAndTasks.ViewModel
                     MessageBox.Show("Такое имя задачи уже есть или пустое значение");
                     return;
                 }
-                var task = new ProjectTasksItemVM(SaveTaskChanges, RemoveTask)
+                var taskItem = new TaskItem
                 {
                     Title = $"{title}",
                     Description = "Описание проекта...",
                     Progress = 0
                 };
-                NewTasks.Add(task);
+                var taskItemVM = new ProjectTasksItemVM(taskItem, SaveTaskChanges, RemoveTask);
+                NewTasks.Add(taskItemVM);
                 var saveTask = new SaveTask();
-                saveTask.SaveMyTask(task.Title, task.Description, task.Progress);
+                saveTask.SaveMyTask(taskItem.Title, taskItem.Description, taskItem.Progress);
 
                 var projectPercent = new ProjectPercent();
                 double projPercent = projectPercent.CalculationOfProjectPercentages();
@@ -122,8 +119,6 @@ namespace ProjectsAndTasks.ViewModel
                 .FirstOrDefault(w => w.Title == "Tasks");
             windowToClose?.Close();
         }
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string name) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+       
     }
 }

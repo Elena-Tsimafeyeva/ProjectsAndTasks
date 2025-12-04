@@ -11,7 +11,7 @@ using ProjectsAndTasks.View;
 
 namespace ProjectsAndTasks.ViewModel
 {
-    internal class TopMenuVM : INotifyPropertyChanged
+    internal class TopMenuVM : ViewModelBase
     {
         public ICommand ProfileCommand { get; }
         public ICommand ExitProfileCommand { get; }
@@ -37,10 +37,6 @@ namespace ProjectsAndTasks.ViewModel
             loginWindow.ShowDialog();
         }
        
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+      
     }
 }

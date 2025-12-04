@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.ComponentModel;
 
 namespace ProjectsAndTasks.Model
 {
-    internal class ProjectItem : INotifyPropertyChanged
+    public class ProjectItem : INotifyPropertyChanged
     {
         private string title;
         private string description;
