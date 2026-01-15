@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ProjectsAndTasks.ViewModel"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
@@ -12,8 +13,10 @@
     <Grid>
         <DockPanel Background="#80FFFFFF">
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right">
-                <Button Content="Profil" Height="20" Width="45" Margin="0,2,2,2" Command="{Binding ProfileCommand}"/>
-                <Button Content="Exit" Height="20" Width="45" Margin="0,2,2,2" Command="{Binding ExitProfileCommand}"/>
+                <Button Content="{DynamicResource Profil_Button}" Height="20" Width="68" Margin="0,2,2,2" Command="{Binding ProfileCommand}"/>
+                <Button Content="{DynamicResource Eng_Button}" Height="20" Width="45" Margin="0,2,2,2" Command="{Binding ChangeToEnglishCommand}"/>
+                <Button Content="{DynamicResource Rus_Button}" Height="20" Width="45" Margin="0,2,2,2" Command="{Binding ChangeToRussianCommand}"/>
+                <Button Content="{DynamicResource Exit_Button}" Height="20" Width="45" Margin="0,2,2,2" Command="{Binding ExitProfileCommand}"/>
             </StackPanel>
         </DockPanel>
     </Grid>

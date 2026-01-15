@@ -1,18 +1,22 @@
 ﻿using MongoDB.Driver;
 using ProjectsAndTasks.MongoDb.Model;
 using ProjectsAndTasks.MongoDb;
+using ProjectsAndTasks.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 
-namespace ProjectsAndTasks.ProgramLogic
+namespace ProjectsAndTasks.Service
 {
     public class LoginCheck
     {
-        private readonly MongoDbContext _context = new MongoDbContext();
+        private readonly IMongoDbContext _context;
+        public LoginCheck(IMongoDbContext context)
+        {
+            _context = context;
+        }
 
         /// <summary>
         ///  E.A.T. 05-November-2025
@@ -36,7 +40,14 @@ namespace ProjectsAndTasks.ProgramLogic
                 return false;
             var filter = Builders<Person>.Filter.Eq(p => p.Login, login);
             var user = _context.Persons.Find(filter).FirstOrDefault();
-            return user.Password == password;
+            return user != null && user.Password == password;
+        }
+        public bool IsPasswordExists(string password)
+        {
+            if (string.IsNullOrWhiteSpace(password))
+                return true;
+            else
+                return false;
         }
     }
 }

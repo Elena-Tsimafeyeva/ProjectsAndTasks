@@ -22,4 +22,8 @@
     <Resource Include="Images\Profile.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repository\" />
+  </ItemGroup>
+
 </Project>

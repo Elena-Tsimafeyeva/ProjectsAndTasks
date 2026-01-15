@@ -1,16 +1,17 @@
-﻿using ProjectsAndTasks.ProgramLogic;
+﻿using ProjectsAndTasks.Service;
+using ProjectsAndTasks.ProgramLogic;
 using ProjectsAndTasks.View;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using ProjectsAndTasks.Interfaces;
+using ProjectsAndTasks.MongoDb;
 
 namespace ProjectsAndTasks.ViewModel
 {
     public class LoginVM : ViewModelBase
     {
-        private readonly LoginCheck _loginCheck = new LoginCheck();
-       
-
+        private readonly LoginCheck _loginCheck;
         private string _login;
         public string Login
         {
@@ -34,6 +35,9 @@ namespace ProjectsAndTasks.ViewModel
         public ICommand RegisterCommand { get; }
         public LoginVM()
         {
+            IMongoDbContext context = new MongoDbContext();
+            _loginCheck = new LoginCheck(context);
+
             LogInCommand = new RelayCommand(LogIn);
             RegisterCommand = new RelayCommand(Register);
         }
@@ -71,6 +75,10 @@ namespace ProjectsAndTasks.ViewModel
             if (_loginCheck.IsLoginExists(Login))
             {
                 MessageBox.Show("Такой логин уже существует или поле пустое");
+            }
+            else if (_loginCheck.IsPasswordExists(Password)) 
+            {
+                MessageBox.Show("Введите пароль");
             }
             else
             {

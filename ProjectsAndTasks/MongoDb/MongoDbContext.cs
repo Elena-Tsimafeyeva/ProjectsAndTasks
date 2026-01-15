@@ -1,10 +1,12 @@
 ﻿using MongoDB.Driver;
 using ProjectsAndTasks.MongoDb.Model;
+using System.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ProjectsAndTasks.Interfaces;
 
 namespace ProjectsAndTasks.MongoDb
 {
@@ -12,14 +14,17 @@ namespace ProjectsAndTasks.MongoDb
     /// E.A.T. 16-October-2025
     /// Connecting MongoDB.
     /// </summary>
-    public class MongoDbContext
+    public class MongoDbContext : IMongoDbContext
     {
         private readonly IMongoDatabase _database;
 
         public MongoDbContext()
         {
-            var client = new MongoClient("mongodb://localhost:27017");
-            _database = client.GetDatabase("ProjectsAndTasksDB");
+            var connection = ConfigurationManager.ConnectionStrings["MainConnection"].ConnectionString;
+            var databaseName = ConfigurationManager.AppSettings["MongoDatabase"];
+
+            var client = new MongoClient(connection);
+            _database = client.GetDatabase(databaseName);
         }
 
         public IMongoCollection<Person> Persons => _database.GetCollection<Person>("Persons");
