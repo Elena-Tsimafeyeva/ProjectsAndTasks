@@ -2,23 +2,28 @@
 using ProjectsAndTasks.MongoDb.Model;
 using ProjectsAndTasks.View;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using ProjectsAndTasks.ProgramLogic;
 using System.Windows;
 using System.Windows.Input;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using ProjectsAndTasks.MongoDb;
+using ProjectsAndTasks.Repository;
+using ProjectsAndTasks.Service;
 
 namespace ProjectsAndTasks.ViewModel
 {
     public class ProjectsVM : ViewModelBase
     {
         private readonly MongoDbContext _context = new MongoDbContext();
+        private readonly ProjectRepository _repository;
+        private readonly MessageBoxService _message = new MessageBoxService();
+        private readonly ProjectCheck projectCheck;
         public ObservableCollection<ProjectItemVM> Projects { get; set; }
         public ICommand CreateProjectCommand { get; }
         public ProjectsVM()
         {
+            projectCheck = new ProjectCheck(_repository);
             Projects = new ObservableCollection<ProjectItemVM>();
             CreateProjectCommand = new RelayCommand(CreateProject);
             LoadProjectsFromDb();
@@ -56,7 +61,7 @@ namespace ProjectsAndTasks.ViewModel
             string title = OutputTitle.ReadTitle();
             if (!string.IsNullOrWhiteSpace(title))
             {
-                var _projectCheck = new ProjectCheck();
+                var _projectCheck = new ProjectCheck(_repository);
                 if (_projectCheck.IsProjectExists(title))
                 {
                     MessageBox.Show("Такое имя проекта уже есть или пустое значение");
@@ -70,7 +75,7 @@ namespace ProjectsAndTasks.ViewModel
                 };
                 var projectItemVM = new ProjectItemVM(projectItem, OpenTasks, SaveProjectChanges, RemoveProject);
                 Projects.Add(projectItemVM);
-                var saveProject = new SaveProject();
+                var saveProject = new SaveProject(_context, _message, projectCheck);
                 saveProject.SaveMyProject(projectItem.Title, projectItem.Description, projectItem.Progress);
             }
         }
@@ -87,7 +92,7 @@ namespace ProjectsAndTasks.ViewModel
         private async void SaveProjectChanges(ProjectItemVM project)
         {
             MessageBox.Show($"Save changes {project.Title}");
-            var saveProject = new SaveProject();
+            var saveProject = new SaveProject(_context, _message, projectCheck);
             await saveProject.UpdateProjectAsync(project.Title, project.Description, project.Progress);
         }
         private async void RemoveProject(ProjectItemVM project)

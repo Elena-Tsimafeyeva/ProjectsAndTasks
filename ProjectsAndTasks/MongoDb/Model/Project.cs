@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using ProjectsAndTasks.MongoDb.Model.InterfacesModel;
 
 namespace ProjectsAndTasks.MongoDb.Model
 {
@@ -7,7 +8,7 @@ namespace ProjectsAndTasks.MongoDb.Model
     /// E.A.T. 30-October-2025
     /// Person data model for storing projects in MongoDB.
     /// </summary>
-    public class Project
+    public class Project : IProject
     {
         [BsonId]
         public ObjectId Id { get; set; }

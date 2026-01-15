@@ -1,9 +1,10 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using ProjectsAndTasks.MongoDb.Model.InterfacesModel;
 
 namespace ProjectsAndTasks.MongoDb.Model
 {
-    public class ProfileInfoDB
+    public class ProfileInfoDB : IProfileInfoDB
     {
         [BsonId]
         public ObjectId Id { get; set; }

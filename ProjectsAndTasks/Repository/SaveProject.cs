@@ -1,25 +1,29 @@
-﻿using ProjectsAndTasks.MongoDb;
+﻿using ProjectsAndTasks.Interfaces;
+using ProjectsAndTasks.ProgramLogic;
 using ProjectsAndTasks.MongoDb.Model;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace ProjectsAndTasks.ProgramLogic
+namespace ProjectsAndTasks.Repository
 {
     public class SaveProject
     {
-        private readonly MongoDbContext _context = new MongoDbContext();
-        private readonly ProjectCheck _projectCheck = new ProjectCheck();
+        private readonly IMongoDbContext _context;
+        private readonly IMessageBox _messageBox;
+        private readonly IProjectCheck _projectCheck;
+        public SaveProject(IMongoDbContext context, IMessageBox messageBox, IProjectCheck projectCheck)
+        {
+            _context = context;
+            _messageBox = messageBox;
+            _projectCheck = projectCheck;
+        }
+
         public void SaveMyProject(string title, string description, int progress)
         {
             if (_projectCheck.IsProjectExists(title))
             {
-                MessageBox.Show("Такое имя проекта уже есть или пустое значение");
+                _messageBox.Show("Такое имя проекта уже есть или пустое значение");
                 var saveTitle = new SaveTitle();
                 saveTitle.SaveMyTitleAsync("");
             }
@@ -56,11 +60,11 @@ namespace ProjectsAndTasks.ProgramLogic
 
             if (result.ModifiedCount > 0)
             {
-                MessageBox.Show("Проект успешно обновлён");
+                _messageBox.Show("Проект успешно обновлён");
             }
             else
             {
-                MessageBox.Show("Проект не найден или данные не изменились");
+                _messageBox.Show("Проект не найден или данные не изменились");
             }
         }
         public static string ReadUserId()

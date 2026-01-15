@@ -6,7 +6,7 @@ namespace ProjectsAndTasks.Service
     ///<summary>
     /// Implementation of the IMessageBox interface for displaying messages and confirmation dialogs.
     ///</summary>
-    internal class MessageBoxService: IMessageBox
+    public class MessageBoxService: IMessageBox
     {
         public void Show(string message)
         {

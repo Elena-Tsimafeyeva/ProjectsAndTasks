@@ -1,13 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using ProjectsAndTasks.MongoDb;
 using ProjectsAndTasks.MongoDb.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ProjectsAndTasks.Repository;
 using System.Windows;
 
 namespace ProjectsAndTasks.ProgramLogic
